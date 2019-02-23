@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Wrapper from "./components/p5/Wrapper";
-import Table from "./components/Table/Table";
-import Home from "./components/Home/Home";
+import Table from "./components/Table/table";
 
 class App extends Component {
   render() {
