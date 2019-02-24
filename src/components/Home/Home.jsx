@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Input, Label, FormGroup } from 'reactstrap';
 import Table from '../Table/Table';
+
 export default class Home extends Component {
   constructor(props) {
     super(props);
