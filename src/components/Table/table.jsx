@@ -1,66 +1,50 @@
-import React, { Component } from 'react';
-import { Table } from 'reactstrap';
+import React, { Component } from "react";
+import { Table, Container, Row } from "reactstrap";
 
 export default class table extends Component {
+  renderCol(n) {
+    const alf = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+    let tr = [];
+    tr[0] = <th>#</th>;
+    for (var i = 0; i < n; i++) {
+      tr[i + 1] = <th className="coluna">{alf[i]}</th>;
+    }
+    return tr.map(test => test);
+  }
+  renderInput(n) {
+    const alf = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+    let input = [];
+    for (var i = 0; i < n; i++) {
+      input[i] = (
+        <td>
+          <input className="input " type="text" />
+        </td>
+      );
+    }
+    return alf.map((res, i) => {
+      if (i < n) {
+        return (
+          <tr>
+            <th scope="row">{res}</th>
+            {input.map(test => test)}
+          </tr>
+        );
+      }
+    });
+  }
   render() {
     return (
-      <Table dark>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>A</th>
-            <th>B</th>
-            <th>C</th>
-            <th>D</th>
-            <th>E</th>
-          </tr>
-        </thead>
+      <Container>
+        <Row>
+          <Table dark>
+            <thead>
+              <tr>{this.renderCol(this.props.n)}</tr>
+            </thead>
 
-        <tbody>
-          <tr>
-            <th scope="row">A</th>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-          </tr>
-
-          <tr>
-            <th scope="row">B</th>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-          </tr>
-          <tr>
-            <th scope="row">C</th>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-          </tr>
-          <tr>
-            <th scope="row">D</th>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-          </tr>
-
-          <tr>
-            <th scope="row">E</th>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-            <td>null</td>
-          </tr>
-        </tbody>
-      </Table>
+            <tbody>{this.renderInput(this.props.n)}</tbody>
+          </Table>
+        </Row>
+      </Container>
     );
   }
 }
