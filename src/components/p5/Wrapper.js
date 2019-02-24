@@ -11,10 +11,6 @@ export default class Wrapper extends Component {
   render() {
     return (
       <div>
-        <input
-          type='number'
-          onChange={e => this.setState({ rotation: e.target.value })}
-        />
         <P5Wrapper sketch={sketch} rotation={this.state.rotation} />
       </div>
     );

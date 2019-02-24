@@ -15,7 +15,7 @@ export default class Node {
       this.showConnectedLines();
     }
     this.p.stroke(0);
-    this.p.rect(this.pos.x, this.pos.y, 30, 30);
+    this.p.ellipse(this.pos.x, this.pos.y, 30, 30);
     // this.p.ellipse(this.pos.x - 15, this.pos.y, 15, 15);
     this.p.text(this.id, this.pos.x - 3, this.pos.y + 3);
   };
@@ -46,12 +46,12 @@ export default class Node {
             p.pop();
           } else {
             p.push();
-            let positiveX = pos.x - node.pos.x > 0;
+            // let positiveX = pos.x - node.pos.x > 0;
             let positiveY = pos.y - node.pos.y > 0;
 
-            let x = positiveX
-              ? (pos.x + node.pos.x) / 2 + pos.x / 20
-              : (pos.x + node.pos.x) / 2 - pos.x / 20;
+            // let x = positiveX
+            //   ? (pos.x + node.pos.x) / 2 + pos.x / 20
+            //   : (pos.x + node.pos.x) / 2 - pos.x / 20;
             let y = positiveY
               ? (pos.y + node.pos.y) / 2 + pos.y / 5
               : (pos.y + node.pos.y) / 2 - pos.y / 5;
@@ -95,6 +95,7 @@ export default class Node {
         ); //draws the arrow point as a triangle
         p.pop();
       }
+      return;
     });
   };
 }
