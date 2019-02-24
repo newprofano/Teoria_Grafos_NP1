@@ -1,17 +1,23 @@
-import React, { Component } from "react";
-import { Container, Input, Label, FormGroup } from "reactstrap";
-import Table from "../Table/Table";
+import React, { Component } from 'react';
+import { Container, Input, Label, FormGroup } from 'reactstrap';
+import Table from '../Table/Table';
 export default class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = { table: false };
+    this.state = { table: false, list: false };
     this.setTable = this.setTable.bind(this);
+    this.setList = this.setList.bind(this);
   }
   setTable() {
-    document.getElementById("select").value !== "..."
-      ? this.setState({ table: true })
+    document.getElementById('select').value !== '...' &&
+    document.getElementById('radio').checked != false
+      ? this.setState({ table: true, list: false })
       : this.setState({ table: false });
-    // this.setState({ table: true });
+  }
+  setList() {
+    document.getElementById('select').value !== '...'
+      ? this.setState({ list: true, table: false })
+      : this.setState({ list: false });
   }
   render() {
     return (
@@ -20,8 +26,8 @@ export default class Home extends Component {
           <Label>Numero de Vertices</Label>
           <Input
             type="select"
-            name="select"
             onChange={this.setTable}
+            name="select"
             id="select"
           >
             <option>...</option>
@@ -37,10 +43,29 @@ export default class Home extends Component {
             <option>10</option>
           </Input>
         </FormGroup>
+        <FormGroup tag="fieldset">
+          <FormGroup check>
+            <Label check>
+              <Input
+                type="radio"
+                id="radio"
+                onChange={this.setTable}
+                name="radio1"
+              />{' '}
+              Matriz Adjacente
+            </Label>
+          </FormGroup>
+          <FormGroup check>
+            <Label check>
+              <Input type="radio" onChange={this.setList} name="radio1" /> Lista
+              Adjacente
+            </Label>
+          </FormGroup>
+        </FormGroup>
         {this.state.table ? (
-          <Table n={document.getElementById("select").value} />
+          <Table n={document.getElementById('select').value} />
         ) : (
-          ""
+          ''
         )}
       </Container>
     );
