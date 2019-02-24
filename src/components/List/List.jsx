@@ -1,37 +1,50 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Table, Container, Row } from 'reactstrap';
 
-export default class table extends Component {
+export default class Example extends React.Component {
   renderCol(n) {
-    const alf = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-    let tr = [];
-    tr[0] = <th>#</th>;
-    for (var i = 0; i < n; i++) {
-      tr[i + 1] = <th className='coluna'>{alf[i]}</th>;
-    }
-    return tr.map(test => test);
+    
+    const alf = ['Adjacente'];
+    let th = [];
+
+    th[0] = <th>#</th>;
+    th[1] = <th>Adjacente</th>;
+
+    
+
+    return alf.map((res, i) =>{
+        if(i <n){
+            return th.map (test =>test);
+        }
+    });
+   
   }
+
   renderInput(n) {
     const alf = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+
     let input = [];
-    for (var i = 0; i < n; i++) {
+
+    for (let i = 0; i < 1; i++) {
       input[i] = (
         <td>
-          <input className='input ' type='text' />
+          <input className="input" type="text" />
         </td>
       );
     }
+
     return alf.map((res, i) => {
       if (i < n) {
         return (
           <tr>
-            <th scope='row'>{res}</th>
+            <th scope="row">{res} </th>
             {input.map(test => test)}
           </tr>
         );
       }
     });
   }
+
   render() {
     return (
       <Container>
