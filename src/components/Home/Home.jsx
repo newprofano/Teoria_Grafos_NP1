@@ -1,6 +1,7 @@
-import React, { Component } from "react";
-import { Container, Input, Label, FormGroup } from "reactstrap";
-import Table from "../Table/Table";
+import React, { Component } from 'react';
+import { Container, Input, Label, FormGroup } from 'reactstrap';
+import Table from '../Table/Table';
+
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -8,7 +9,7 @@ export default class Home extends Component {
     this.setTable = this.setTable.bind(this);
   }
   setTable() {
-    document.getElementById("select").value !== "..."
+    document.getElementById('select').value !== '...'
       ? this.setState({ table: true })
       : this.setState({ table: false });
     // this.setState({ table: true });
@@ -38,9 +39,9 @@ export default class Home extends Component {
           </Input>
         </FormGroup>
         {this.state.table ? (
-          <Table n={document.getElementById("select").value} />
+          <Table n={document.getElementById('select').value} />
         ) : (
-          ""
+          ''
         )}
       </Container>
     );
