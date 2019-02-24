@@ -6,10 +6,9 @@ import List from './components/List/List';
 class App extends Component {
   render() {
     return (
-      <div className='App'>
+      <div className="App">
         <Wrapper />
         <Home />
-        <List />
       </div>
     );
   }
