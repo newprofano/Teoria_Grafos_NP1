@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Input, Label, FormGroup } from 'reactstrap';
-import Table from '../Table/Table';
+import Table from '../Table/table';
+import List from '../List/List';
 
 export default class Home extends Component {
   constructor(props) {
@@ -16,7 +17,8 @@ export default class Home extends Component {
       : this.setState({ table: false });
   }
   setList() {
-    document.getElementById('select').value !== '...'
+    document.getElementById('select').value !== '...' &&
+    document.getElementById('radio2').checked != false
       ? this.setState({ list: true, table: false })
       : this.setState({ list: false });
   }
@@ -28,6 +30,7 @@ export default class Home extends Component {
           <Input
             type="select"
             onChange={this.setTable}
+            onChange={this.setList}
             name="select"
             id="select"
           >
@@ -58,13 +61,24 @@ export default class Home extends Component {
           </FormGroup>
           <FormGroup check>
             <Label check>
-              <Input type="radio" onChange={this.setList} name="radio1" /> Lista
-              Adjacente
+              <Input
+                type="radio"
+                id="radio2"
+                onChange={this.setList}
+                name="radio1"
+              />{' '}
+              Lista Adjacente
             </Label>
           </FormGroup>
         </FormGroup>
         {this.state.table ? (
           <Table n={document.getElementById('select').value} />
+        ) : (
+          ''
+        )}
+
+        {this.state.list ? (
+          <List n={document.getElementById('select').value} />
         ) : (
           ''
         )}
