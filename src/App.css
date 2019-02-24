@@ -1,0 +1,10 @@
+.input {
+  width: 50px;
+  float: left;
+}
+.coluna {
+  width: 40px;
+}
+th {
+  width: 10px;
+}
