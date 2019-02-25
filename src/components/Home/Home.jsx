@@ -1,26 +1,44 @@
 import React, { Component } from 'react';
-import { Container, Input, Label, FormGroup } from 'reactstrap';
+import { Container, Input, Label, FormGroup, Button } from 'reactstrap';
 import Table from '../Table/table';
 import List from '../List/List';
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = { table: false, list: false };
+    this.state = { table: false, list: false, input: [] };
     this.setTable = this.setTable.bind(this);
     this.setList = this.setList.bind(this);
+    this.gerarGrafo = this.gerarGrafo.bind(this);
   }
   setTable() {
     document.getElementById('select').value !== '...' &&
-    document.getElementById('radio').checked != false
+    document.getElementById('radio').checked !== false
       ? this.setState({ table: true, list: false })
       : this.setState({ table: false });
   }
   setList() {
     document.getElementById('select').value !== '...' &&
-    document.getElementById('radio2').checked != false
+    document.getElementById('radio2').checked !== false
       ? this.setState({ list: true, table: false })
       : this.setState({ list: false });
+  }
+  gerarGrafo() {
+    let select = document.getElementById('select').value;
+    let input = document.getElementsByClassName('input');
+    let array = [];
+    const alf = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+    let j = -1;
+    for (let i = 0; i < input.length; i++) {
+      if (i % select == 0) {
+        j++;
+      }
+      array.push(input[i].value);
+      console.log(alf[j] + ' =  ' + input[i].value);
+      console.log(array);
+    }
+    this.setState({ input: array });
+    console.log(this.state.input);
   }
   render() {
     return (
@@ -82,6 +100,7 @@ export default class Home extends Component {
         ) : (
           ''
         )}
+        <Button onClick={this.gerarGrafo}>Gerar Grafo</Button>
       </Container>
     );
   }
