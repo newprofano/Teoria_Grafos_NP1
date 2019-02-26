@@ -6,7 +6,11 @@ import List from '../List/List';
 export default class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = { table: false, list: false, input: [] };
+    this.state = {
+      table: false,
+      list: false,
+      input: {}
+    };
     this.setTable = this.setTable.bind(this);
     this.setList = this.setList.bind(this);
     this.gerarGrafo = this.gerarGrafo.bind(this);
@@ -26,14 +30,26 @@ export default class Home extends Component {
   gerarGrafo() {
     let select = document.getElementById('select').value;
     let input = document.getElementsByClassName('input');
-    let array = [];
+    let array = {
+      A: [],
+      B: [],
+      C: [],
+      D: [],
+      E: [],
+      F: [],
+      G: [],
+      H: [],
+      i: [],
+      j: []
+    };
     const alf = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     let j = -1;
     for (let i = 0; i < input.length; i++) {
       if (i % select == 0) {
         j++;
       }
-      array.push(input[i].value);
+
+      array[alf[j]].push(input[i].value);
       console.log(alf[j] + ' =  ' + input[i].value);
       console.log(array);
     }
