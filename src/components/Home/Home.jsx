@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Input, Label, FormGroup, Button } from 'reactstrap';
 import Table from '../Table/table';
 import List from '../List/List';
+import Wrapper from '../p5/Wrapper';
 
 export default class Home extends Component {
   constructor(props) {
@@ -39,8 +40,8 @@ export default class Home extends Component {
       F: [],
       G: [],
       H: [],
-      i: [],
-      j: []
+      I: [],
+      J: [],
     };
     const alf = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     let j = -1;
@@ -50,23 +51,24 @@ export default class Home extends Component {
       }
 
       array[alf[j]].push(input[i].value);
-      console.log(alf[j] + ' =  ' + input[i].value);
-      console.log(array);
+      // console.log(alf[j] + ' =  ' + input[i].value);
+      // console.log(array);
     }
     this.setState({ input: array });
-    console.log(this.state.input);
   }
   render() {
     return (
       <Container>
+        <Wrapper inputs={this.state.input} />
+
         <FormGroup>
           <Label>Numero de Vertices</Label>
           <Input
-            type="select"
+            type='select'
             onChange={this.setTable}
             onChange={this.setList}
-            name="select"
-            id="select"
+            name='select'
+            id='select'
           >
             <option>...</option>
             <option>1</option>
@@ -81,14 +83,14 @@ export default class Home extends Component {
             <option>10</option>
           </Input>
         </FormGroup>
-        <FormGroup tag="fieldset">
+        <FormGroup tag='fieldset'>
           <FormGroup check>
             <Label check>
               <Input
-                type="radio"
-                id="radio"
+                type='radio'
+                id='radio'
                 onChange={this.setTable}
-                name="radio1"
+                name='radio1'
               />{' '}
               Matriz Adjacente
             </Label>
@@ -96,10 +98,10 @@ export default class Home extends Component {
           <FormGroup check>
             <Label check>
               <Input
-                type="radio"
-                id="radio2"
+                type='radio'
+                id='radio2'
                 onChange={this.setList}
-                name="radio1"
+                name='radio1'
               />{' '}
               Lista Adjacente
             </Label>
