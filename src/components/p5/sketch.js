@@ -1,4 +1,3 @@
-import Node from './Node';
 export default function sketch(p) {
   let avaiableConfig = [
     { pos: { x: 100, y: 50 }, color: [255, 0, 0] },
@@ -13,12 +12,7 @@ export default function sketch(p) {
     { pos: { x: 220, y: 10 }, color: [247, 0, 255] }
   ];
 
-  let nodes = [{ id: 'A', node: new Node(p, 'A', true) }];
-
-  nodes.map(({ node }, i) => {
-    node.pos = avaiableConfig[i].pos;
-    node.strokeColor = avaiableConfig[i].color;
-  });
+  let nodes = [];
 
   // nodes[0].node.addConnectedNode(nodes[1].node);
   // nodes[1].node.addValue({ connectedId: 'A', weight: '10.2' });
@@ -28,7 +22,16 @@ export default function sketch(p) {
     p.createCanvas(600, 400);
   };
 
-  p.myCustomRedrawAccordingToNewPropsHandler = function(props) {};
+  p.myCustomRedrawAccordingToNewPropsHandler = function(props) {
+    if (props.nodes) {
+      nodes = [...props.nodes];
+      nodes.map(({ node }, i) => {
+        node.setP(p);
+        node.pos = avaiableConfig[i].pos;
+        node.strokeColor = avaiableConfig[i].color;
+      });
+    }
+  };
 
   p.draw = function() {
     p.background(100);
