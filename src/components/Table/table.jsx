@@ -3,11 +3,10 @@ import { Table, Container, Row } from 'reactstrap';
 
 export default class table extends Component {
   renderCol(n) {
-    const alf = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     let tr = [];
     tr[0] = <th>#</th>;
     for (let i = 0; i < n; i++) {
-      tr[i + 1] = <th className="coluna">{alf[i]}</th>;
+      tr[i + 1] = <th className="coluna">{String.fromCharCode(65 + i)}</th>;
     }
     return tr.map(test => test);
   }
@@ -17,7 +16,7 @@ export default class table extends Component {
     for (let i = 0; i < n; i++) {
       input[i] = (
         <td>
-          <input className="input " type="text" />
+          <input key={alf[i]} className="input " type="text" />
         </td>
       );
     }

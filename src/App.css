@@ -11,3 +11,16 @@ th {
 .inputAdj {
   width: 300px;
 }
+
+#defaultCanvas0 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+button {
+  margin-bottom: 20px;
+}
+#text {
+  display: inline;
+  margin-left: 10px;
+}
