@@ -3,6 +3,7 @@ import { Container, Input, Label, FormGroup, Button } from 'reactstrap';
 import Table from '../Table/table';
 import List from '../List/List';
 import Wrapper from '../p5/Wrapper';
+import CTable from '../Converted/CTable';
 
 export default class Home extends Component {
   constructor(props) {
@@ -10,7 +11,10 @@ export default class Home extends Component {
     this.state = {
       table: false,
       list: false,
-      input: {}
+      input: {},
+      direcionado: true,
+      valorado: false,
+      showConvertedTable: false
     };
     this.setTable = this.setTable.bind(this);
     this.setList = this.setList.bind(this);
@@ -28,7 +32,7 @@ export default class Home extends Component {
       ? this.setState({ list: true, table: false })
       : this.setState({ list: false });
   }
-  gerarGrafo() {
+  gerarGrafo(clickedL, indexL) {
     let select = document.getElementById('select').value;
     let input = document.getElementsByClassName('input');
     let array = {
@@ -41,7 +45,7 @@ export default class Home extends Component {
       G: [],
       H: [],
       I: [],
-      J: [],
+      J: []
     };
     const alf = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     let j = -1;
@@ -50,16 +54,59 @@ export default class Home extends Component {
         j++;
       }
 
-      array[alf[j]].push(input[i].value);
+      array[alf[j]].push(
+        this.state.valorado ? input[i].value : input[i].checked
+      );
       // console.log(alf[j] + ' =  ' + input[i].value);
       // console.log(array);
     }
-    this.setState({ input: array });
+
+    // TALVEZ DPOIS :)
+    // const objList = {};
+    // let letterIndex = 0;
+    // for (const l in array) {
+    //   if (array[l].length !== 0) {
+    //     if (!this.state.direcionado && !this.state.valorado) {
+    //       for (let i = 0; i < array[l].length; i++) {
+    //         if (array[l][i]) {
+    //           array[String.fromCharCode(65 + i)][letterIndex] = true;
+    //         }
+    //       }
+    //     }
+
+    //     objList[l] = array[l];
+    //   }
+    //   letterIndex++;
+    // }
+
+    // if (clickedL && indexL) {
+    //   if (objList[clickedL][indexL]) {
+    //     objList[clickedL][indexL] = false;
+
+    //     // pega a letra do index d indexL (o q foi clicado) e dpois pega a letra da row e transforma em numero
+    //     objList[String.fromCharCode(65 + indexL)][
+    //       clickedL.charCodeAt(0) - 65
+    //     ] = false;
+    //   }
+    // }
+
+    const objList = {};
+    for (const l in array) {
+      if (array[l].length !== 0) {
+        objList[l] = array[l];
+      }
+    }
+
+    this.setState({ input: objList, showConvertedTable: true });
   }
+  handleCheckbox = (e, key) => {
+    this.setState({ [key]: e.target.checked });
+  };
   render() {
+    const { direcionado, valorado, showConvertedTable, input } = this.state;
     return (
-      <Container>
-        <Wrapper inputs={this.state.input} />
+      <Container style={{ marginTop: '100px' }}>
+        {/* <Wrapper inputs={this.state.input} /> */}
 
         <FormGroup>
           <Label>Numero de Vertices</Label>
@@ -106,19 +153,52 @@ export default class Home extends Component {
               Lista Adjacente
             </Label>
           </FormGroup>
+          <FormGroup check style={{ marginLeft: '30px' }}>
+            <Label check>
+              <Input
+                type='checkbox'
+                defaultChecked={direcionado}
+                onChange={e => this.handleCheckbox(e, 'direcionado')}
+                onc
+              />
+              direcionado
+            </Label>
+          </FormGroup>
+          <FormGroup style={{ marginLeft: '50px' }}>
+            <Label check>
+              <Input
+                type='checkbox'
+                defaultChecked={valorado}
+                onChange={e => this.handleCheckbox(e, 'valorado')}
+              />
+              valorado
+            </Label>
+          </FormGroup>
         </FormGroup>
         {this.state.table ? (
-          <Table n={document.getElementById('select').value} />
+          <Table
+            grafoGerado={this.state.input}
+            gerarGrafo={this.gerarGrafo}
+            direcionado={direcionado}
+            valorado={valorado}
+            n={document.getElementById('select').value}
+          />
         ) : (
           ''
         )}
 
         {this.state.list ? (
-          <List n={document.getElementById('select').value} />
+          <List
+            direcionado
+            valorado
+            n={document.getElementById('select').value}
+          />
         ) : (
           ''
         )}
         <Button onClick={this.gerarGrafo}>Gerar Grafo</Button>
+
+        {showConvertedTable && <CTable inputs={input} />}
       </Container>
     );
   }
