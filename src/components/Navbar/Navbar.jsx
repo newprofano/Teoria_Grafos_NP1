@@ -5,7 +5,7 @@ import imagem from '../../img/logoGrafo.png';
 export default class Logo extends React.Component {
   render() {
     return (
-      <Navbar color="dark" fixed="top" className="navbar-dark">
+      <Navbar color="dark" className="navbar-dark">
         <NavbarBrand href="#home" color="light">
           <img
             alt=""
@@ -14,7 +14,7 @@ export default class Logo extends React.Component {
             height="60"
             className="d-inline-block align-top"
           />
-          {'   Grafos: Matriz e Lista Adjacentes'}
+          <span id="text">Grafos: Matriz e Lista Adjacentes</span>
         </NavbarBrand>
       </Navbar>
     );

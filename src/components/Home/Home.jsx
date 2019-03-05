@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Container, Input, Label, FormGroup, Button } from 'reactstrap';
+import {
+  Container,
+  Input,
+  Label,
+  FormGroup,
+  Button,
+  Row,
+  Col
+} from 'reactstrap';
 import Table from '../Table/table';
 import List from '../List/List';
 import Wrapper from '../p5/Wrapper';
@@ -14,7 +22,9 @@ export default class Home extends Component {
       input: {},
       direcionado: true,
       valorado: false,
-      showConvertedTable: false
+      showConvertedTable: false,
+      show: false
+
     };
     this.setTable = this.setTable.bind(this);
     this.setList = this.setList.bind(this);
@@ -50,34 +60,35 @@ export default class Home extends Component {
     const alf = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     let j = -1;
     for (let i = 0; i < input.length; i++) {
-      if (i % select == 0) {
+      if (i % select === 0) {
         j++;
       }
+// <<<<<<< master
 
-      array[alf[j]].push(
-        this.state.valorado ? input[i].value : input[i].checked
-      );
-      // console.log(alf[j] + ' =  ' + input[i].value);
-      // console.log(array);
-    }
+//       array[alf[j]].push(
+//         this.state.valorado ? input[i].value : input[i].checked
+//       );
+//       // console.log(alf[j] + ' =  ' + input[i].value);
+//       // console.log(array);
+//     }
 
-    // TALVEZ DPOIS :)
-    // const objList = {};
-    // let letterIndex = 0;
-    // for (const l in array) {
-    //   if (array[l].length !== 0) {
-    //     if (!this.state.direcionado && !this.state.valorado) {
-    //       for (let i = 0; i < array[l].length; i++) {
-    //         if (array[l][i]) {
-    //           array[String.fromCharCode(65 + i)][letterIndex] = true;
-    //         }
-    //       }
-    //     }
+//     // TALVEZ DPOIS :)
+//     // const objList = {};
+//     // let letterIndex = 0;
+//     // for (const l in array) {
+//     //   if (array[l].length !== 0) {
+//     //     if (!this.state.direcionado && !this.state.valorado) {
+//     //       for (let i = 0; i < array[l].length; i++) {
+//     //         if (array[l][i]) {
+//     //           array[String.fromCharCode(65 + i)][letterIndex] = true;
+//     //         }
+//     //       }
+//     //     }
 
-    //     objList[l] = array[l];
-    //   }
-    //   letterIndex++;
-    // }
+//     //     objList[l] = array[l];
+//     //   }
+//     //   letterIndex++;
+//     // }
 
     // if (clickedL && indexL) {
     //   if (objList[clickedL][indexL]) {
@@ -90,14 +101,19 @@ export default class Home extends Component {
     //   }
     // }
 
-    const objList = {};
-    for (const l in array) {
-      if (array[l].length !== 0) {
-        objList[l] = array[l];
-      }
-    }
+//     const objList = {};
+//     for (const l in array) {
+//       if (array[l].length !== 0) {
+//         objList[l] = array[l];
+//       }
+//     }
 
-    this.setState({ input: objList, showConvertedTable: true });
+//     this.setState({ input: objList, showConvertedTable: true });
+// =======
+      array[alf[j]].push(input[i].value);
+    }
+    this.setState({ input: array, show: true });
+// >>>>>>> master
   }
   handleCheckbox = (e, key) => {
     this.setState({ [key]: e.target.checked });
@@ -105,39 +121,43 @@ export default class Home extends Component {
   render() {
     const { direcionado, valorado, showConvertedTable, input } = this.state;
     return (
-      <Container style={{ marginTop: '100px' }}>
-        {/* <Wrapper inputs={this.state.input} /> */}
 
-        <FormGroup>
-          <Label>Numero de Vertices</Label>
-          <Input
-            type='select'
-            onChange={this.setTable}
-            onChange={this.setList}
-            name='select'
-            id='select'
-          >
-            <option>...</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-          </Input>
-        </FormGroup>
-        <FormGroup tag='fieldset'>
+      <Container>
+        <Row>
+          <Col xs={4}>
+            <FormGroup>
+              <Label>Numero de Vertices</Label>
+              <Input
+                type="select"
+                onChange={this.setTable}
+                onChange={this.setList}
+                name="select"
+                id="select"
+              >
+                <option>...</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+              </Input>
+            </FormGroup>
+          </Col>
+        </Row>
+        <FormGroup tag="fieldset">
+
           <FormGroup check>
             <Label check>
               <Input
-                type='radio'
-                id='radio'
+                type="radio"
+                id="radio"
                 onChange={this.setTable}
-                name='radio1'
+                name="radio1"
               />{' '}
               Matriz Adjacente
             </Label>
@@ -145,10 +165,10 @@ export default class Home extends Component {
           <FormGroup check>
             <Label check>
               <Input
-                type='radio'
-                id='radio2'
+                type="radio"
+                id="radio2"
                 onChange={this.setList}
-                name='radio1'
+                name="radio1"
               />{' '}
               Lista Adjacente
             </Label>
@@ -198,7 +218,8 @@ export default class Home extends Component {
         )}
         <Button onClick={this.gerarGrafo}>Gerar Grafo</Button>
 
-        {showConvertedTable && <CTable inputs={input} />}
+        {this.state.show ? <Wrapper inputs={this.state.input} /> : ''}
+
       </Container>
     );
   }

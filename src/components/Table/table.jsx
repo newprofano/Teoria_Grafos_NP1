@@ -3,15 +3,12 @@ import { Table, Container, Row, Input, Label } from 'reactstrap';
 
 export default class table extends Component {
   renderCol(n) {
-    const alf = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     let tr = [];
     tr[0] = <th>#</th>;
     for (let i = 0; i < n; i++) {
-      tr[i + 1] = (
-        <th align='center' style={{ textAlign: 'center' }} className='coluna'>
-          {alf[i]}
-        </th>
-      );
+      
+      tr[i + 1] = <th className="coluna">{String.fromCharCode(65 + i)}</th>;
+
     }
     return tr.map(test => test);
   }
@@ -29,15 +26,10 @@ export default class table extends Component {
 
     for (let i = 0; i < n; i++) {
       input[i] = (
-        <td align='center'>
-          <Label>
-            <Input
-              onChange={() => this.props.gerarGrafo(null, null)}
-              className='input'
-              type={type}
-            />
-            {/* {!this.props.valorado && 'conectado'} */}
-          </Label>
+
+        <td>
+          <input key={alf[i]} className="input " type="text" />
+
         </td>
       );
     }
