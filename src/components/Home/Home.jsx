@@ -11,6 +11,7 @@ import {
 import Table from '../Table/table';
 import List from '../List/List';
 import Wrapper from '../p5/Wrapper';
+import CTable from '../Converted/CTable';
 
 export default class Home extends Component {
   constructor(props) {
@@ -19,7 +20,11 @@ export default class Home extends Component {
       table: false,
       list: false,
       input: {},
+      direcionado: true,
+      valorado: false,
+      showConvertedTable: false,
       show: false
+
     };
     this.setTable = this.setTable.bind(this);
     this.setList = this.setList.bind(this);
@@ -37,7 +42,7 @@ export default class Home extends Component {
       ? this.setState({ list: true, table: false })
       : this.setState({ list: false });
   }
-  gerarGrafo() {
+  gerarGrafo(clickedL, indexL) {
     let select = document.getElementById('select').value;
     let input = document.getElementsByClassName('input');
     let array = {
@@ -58,12 +63,65 @@ export default class Home extends Component {
       if (i % select === 0) {
         j++;
       }
+// <<<<<<< master
+
+//       array[alf[j]].push(
+//         this.state.valorado ? input[i].value : input[i].checked
+//       );
+//       // console.log(alf[j] + ' =  ' + input[i].value);
+//       // console.log(array);
+//     }
+
+//     // TALVEZ DPOIS :)
+//     // const objList = {};
+//     // let letterIndex = 0;
+//     // for (const l in array) {
+//     //   if (array[l].length !== 0) {
+//     //     if (!this.state.direcionado && !this.state.valorado) {
+//     //       for (let i = 0; i < array[l].length; i++) {
+//     //         if (array[l][i]) {
+//     //           array[String.fromCharCode(65 + i)][letterIndex] = true;
+//     //         }
+//     //       }
+//     //     }
+
+//     //     objList[l] = array[l];
+//     //   }
+//     //   letterIndex++;
+//     // }
+
+    // if (clickedL && indexL) {
+    //   if (objList[clickedL][indexL]) {
+    //     objList[clickedL][indexL] = false;
+
+    //     // pega a letra do index d indexL (o q foi clicado) e dpois pega a letra da row e transforma em numero
+    //     objList[String.fromCharCode(65 + indexL)][
+    //       clickedL.charCodeAt(0) - 65
+    //     ] = false;
+    //   }
+    // }
+
+//     const objList = {};
+//     for (const l in array) {
+//       if (array[l].length !== 0) {
+//         objList[l] = array[l];
+//       }
+//     }
+
+//     this.setState({ input: objList, showConvertedTable: true });
+// =======
       array[alf[j]].push(input[i].value);
     }
     this.setState({ input: array, show: true });
+// >>>>>>> master
   }
+  handleCheckbox = (e, key) => {
+    this.setState({ [key]: e.target.checked });
+  };
   render() {
+    const { direcionado, valorado, showConvertedTable, input } = this.state;
     return (
+
       <Container>
         <Row>
           <Col xs={4}>
@@ -92,6 +150,7 @@ export default class Home extends Component {
           </Col>
         </Row>
         <FormGroup tag="fieldset">
+
           <FormGroup check>
             <Label check>
               <Input
@@ -114,20 +173,53 @@ export default class Home extends Component {
               Lista Adjacente
             </Label>
           </FormGroup>
+          <FormGroup check style={{ marginLeft: '30px' }}>
+            <Label check>
+              <Input
+                type='checkbox'
+                defaultChecked={direcionado}
+                onChange={e => this.handleCheckbox(e, 'direcionado')}
+                onc
+              />
+              direcionado
+            </Label>
+          </FormGroup>
+          <FormGroup style={{ marginLeft: '50px' }}>
+            <Label check>
+              <Input
+                type='checkbox'
+                defaultChecked={valorado}
+                onChange={e => this.handleCheckbox(e, 'valorado')}
+              />
+              valorado
+            </Label>
+          </FormGroup>
         </FormGroup>
         {this.state.table ? (
-          <Table n={document.getElementById('select').value} />
+          <Table
+            grafoGerado={this.state.input}
+            gerarGrafo={this.gerarGrafo}
+            direcionado={direcionado}
+            valorado={valorado}
+            n={document.getElementById('select').value}
+          />
         ) : (
           ''
         )}
 
         {this.state.list ? (
-          <List n={document.getElementById('select').value} />
+          <List
+            direcionado
+            valorado
+            n={document.getElementById('select').value}
+          />
         ) : (
           ''
         )}
         <Button onClick={this.gerarGrafo}>Gerar Grafo</Button>
+
         {this.state.show ? <Wrapper inputs={this.state.input} /> : ''}
+
       </Container>
     );
   }
