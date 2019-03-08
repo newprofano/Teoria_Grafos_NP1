@@ -48,7 +48,7 @@ export default class Node {
         p.stroke(0);
         p.ellipse(pos.x - 15, pos.y - 5, 20, 20);
         p.pop();
-        return;
+        return null;
       }
 
       if (values.length !== 0) {
@@ -105,7 +105,7 @@ export default class Node {
         ); //draws the arrow point as a triangle
         p.pop();
       }
-      return;
+      return null;
     });
   };
 }

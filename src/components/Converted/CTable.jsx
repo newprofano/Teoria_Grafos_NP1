@@ -16,22 +16,19 @@ const makeConnectedToAndValues = input => {
 const showValues = arrayString => {
   const { connectedTo, values } = makeConnectedToAndValues(arrayString);
 
-  console.log(connectedTo);
-
   let res = '';
 
-  connectedTo.map((key, i) => {
-    res += `${
-      typeof values[i].weight === 'boolean' ? '' : values[i].weight
-    } ${key}; `;
-  });
+  connectedTo.map(
+    (key, i) =>
+      (res += `${
+        typeof values[i].weight === 'boolean' ? '' : values[i].weight
+      } ${key}; `)
+  );
 
   return res.substr(0, res.length - 2);
 };
 
 const CTable = ({ inputs }) => {
-  console.log(inputs);
-
   const inputsKeys = Object.keys(inputs);
   const head = (
     <thead>
