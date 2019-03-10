@@ -59,7 +59,7 @@ export default class Home extends Component {
     const alf = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     let j = -1;
     for (let i = 0; i < input.length; i++) {
-      if (i % select == 0) {
+      if (i % select === 0) {
         j++;
       }
 
@@ -71,35 +71,44 @@ export default class Home extends Component {
     }
 
     // TALVEZ DPOIS :)
-    // const objList = {};
-    // let letterIndex = 0;
-    // for (const l in array) {
-    //   if (array[l].length !== 0) {
-    //     if (!this.state.direcionado && !this.state.valorado) {
-    //       for (let i = 0; i < array[l].length; i++) {
-    //         if (array[l][i]) {
-    //           array[String.fromCharCode(65 + i)][letterIndex] = true;
-    //         }
-    //       }
-    //     }
-
-    //     objList[l] = array[l];
-    //   }
-    //   letterIndex++;
-    // }
-
-    // if (clickedL && indexL) {
-    //   if (objList[clickedL][indexL]) {
-    //     objList[clickedL][indexL] = false;
-
-    //     // pega a letra do index d indexL (o q foi clicado) e dpois pega a letra da row e transforma em numero
-    //     objList[String.fromCharCode(65 + indexL)][
-    //       clickedL.charCodeAt(0) - 65
-    //     ] = false;
-    //   }
-    // }
-
     const objList = {};
+    let letterIndex = 0;
+    for (const l in array) {
+      if (array[l].length !== 0) {
+        if (!this.state.direcionado) {
+          for (let i = 0; i < array[l].length; i++) {
+            if (array[l][i]) {
+              if (!this.state.valorado) {
+                array[String.fromCharCode(65 + i)][letterIndex] = true;
+              } else {
+                array[String.fromCharCode(65 + i)][letterIndex] = array[l][i];
+              }
+            }
+          }
+        }
+
+        objList[l] = array[l];
+      }
+      letterIndex++;
+    }
+
+    console.log('clickedL:', clickedL, 'indexL:', indexL);
+    console.log(objList);
+    if (clickedL && !isNaN(indexL)) {
+      console.log('entrou clicked true');
+
+      if (objList[clickedL][indexL]) {
+        console.log('entrou objList true');
+
+        objList[clickedL][indexL] = false;
+
+        // pega a letra do index d indexL (o q foi clicado) e dpois pega a letra da row e transforma em numero
+        objList[String.fromCharCode(65 + indexL)][
+          clickedL.charCodeAt(0) - 65
+        ] = false;
+      }
+    }
+
     for (const l in array) {
       if (array[l].length !== 0) {
         objList[l] = array[l];
@@ -122,7 +131,7 @@ export default class Home extends Component {
               <Input
                 type='select'
                 onChange={this.setTable}
-                onChange={this.setList}
+                // onChange={this.setList}
                 name='select'
                 id='select'
               >

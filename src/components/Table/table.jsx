@@ -16,7 +16,21 @@ export default class table extends Component {
     return tr.map(test => test);
   }
 
-  handleChangeCheckbox = e => {};
+  handleChangeCheckbox = (letter, i, e, type) => {
+    if (type === 'checkbox') {
+      if (!e.target.checked) {
+        this.props.gerarGrafo(letter, i);
+      } else {
+        this.props.gerarGrafo(null, null);
+      }
+    } else {
+      if (e.target.value === '') {
+        this.props.gerarGrafo(letter, i);
+      } else {
+        this.props.gerarGrafo(null, null);
+      }
+    }
+  };
 
   renderInput(n, type) {
     const alf = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
@@ -42,42 +56,65 @@ export default class table extends Component {
       );
     }
 
-    return alf.map((res, i) => {
+    // TALVEZ DPOIS :)
+    const { grafoGerado, direcionado } = this.props;
+    let temGrafo = !direcionado && Object.keys(grafoGerado).length !== 0;
+
+    return alf.map((letter, i) => {
       if (i < n) {
         return (
           <tr>
             <th scope='row' style={{ width: '50px' }}>
-              {res}
+              {letter}
             </th>
-            {input}
+            {temGrafo
+              ? aux.map((_, i) => (
+                  <td align='center'>
+                    <Label>{this.makeInput(type, letter, i)}</Label>
+                  </td>
+                ))
+              : input}
           </tr>
         );
       }
     });
-
-    // TALVEZ DPOIS :)
-    // const { grafoGerado, direcionado, valorado } = this.props;
-    // let temGrafo =
-    //   !direcionado && !valorado && Object.keys(grafoGerado).length !== 0;
-
-    // {temGrafo
-    //   ? aux.map((_, i) => (
-    //       <td align='center'>
-    //         <Label>
-    //           <Input
-    //             onChange={() => this.props.gerarGrafo(res, i)}
-    //             className='input'
-    //             type={type}
-    //             checked={grafoGerado[res][i]}
-    //           />
-    //           {/* {!this.props.valorado && 'conectado'} */}
-    //         </Label>
-    //       </td>
-    //     ))
-    //   : input}
   }
+
+  makeInput = (type, letter, i) => {
+    const { grafoGerado } = this.props;
+    if (type === 'checkbox') {
+      return (
+        <Input
+          onChange={e => this.handleChangeCheckbox(letter, i, e, type)}
+          className='input'
+          type={type}
+          checked={grafoGerado[letter] ? grafoGerado[letter][i] : false}
+        />
+      );
+    } else {
+      let value;
+      if (grafoGerado[letter]) {
+        value =
+          typeof grafoGerado[letter][i] === 'boolean'
+            ? ''
+            : grafoGerado[letter][i];
+      } else {
+        value = '';
+      }
+
+      return (
+        <Input
+          onChange={e => this.handleChangeCheckbox(letter, i, e, type)}
+          className='input'
+          type={type}
+          value={value}
+        />
+      );
+    }
+  };
+
   render() {
-    const { n, direcionado, valorado } = this.props;
+    const { n, valorado } = this.props;
     const type = valorado ? 'input' : 'checkbox';
     return (
       <Container>

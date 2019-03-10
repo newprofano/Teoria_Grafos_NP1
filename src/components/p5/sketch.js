@@ -29,14 +29,14 @@ export default function sketch(p) {
         node.setP(p);
         node.pos = avaiableConfig[i].pos;
         node.strokeColor = avaiableConfig[i].color;
+
+        return null;
       });
     }
   };
 
   p.draw = function() {
     p.background(100);
-    nodes.map(({ node }) => {
-      node.show();
-    });
+    nodes.map(({ node }) => node.show());
   };
 }
